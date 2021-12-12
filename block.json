@@ -1,0 +1,30 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "create-block/hero-image-rating",
+	"version": "0.1.0",
+	"title": "Hero Image Rating",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Hero Image Block mit Bewertung",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "hero-image-rating",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Add a title..."
+		},
+		"mediaUrl": {
+			"type": "string"
+		},
+		"color": {
+			"type": "string",
+			"default": ""
+		}
+	}
+}
