@@ -1,33 +1,66 @@
 
 import { __ } from '@wordpress/i18n';
-import { useBlockProps } from '@wordpress/block-editor';
-import { MediaPlaceholder, MediaUploadCheck, MediaUpload } from '@wordpress/block-editor';
-import { TextControl, ColorPalette, Placeholder, Button, Panel, PanelBody, PanelRow } from '@wordpress/components';
+import { useBlockProps, MediaUploadCheck, MediaUpload, RichText, InspectorControls } from '@wordpress/block-editor';
+import { ColorPalette, Placeholder, Button, PanelBody, RangeControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-
+import { Rating } from 'react-simple-star-rating';
 import './editor.scss';
 
-function ColorSelection({ attributes, setAttributes }) {
-	console.log(attributes.color)
-	const colors = [
-		{ name: 'Verdigris', color: '#05A8AA' },
-		{ name: 'Turquoise Green', color: '#B8D5B8' },
-		{ name: 'Desert Sand', color: '#D7B49E' },
-		{ name: 'Flame', color: '#DC602E' },
-		{ name: 'International Orange', color: '#BC412B' },
-	];
+
+//____PANELSETTINGS____//
+function SetBackgroundSettings({ attributes, setAttributes }) {
 	return (
-		<ColorPalette
-			colors={colors}
-			disableCustomColors={true}
-			value={attributes.color}
-			onChange={(color) => setAttributes({ color: color })}
-		/>
+		<PanelBody title={'Background Settings'}>
+			<p><strong>Select a Background Opacity:</strong></p>
+			<RangeControl
+				value={attributes.bgOpacity}
+				onChange={(val) => setAttributes({ bgOpacity: val })}
+				min={0}
+				max={1}
+				step={0.05}
+			/>
+		</PanelBody>
+	)
+}
+
+function SetTitleSettings({ attributes, setAttributes, colors }) {
+	return (
+		<PanelBody title={'Title Settings'}>
+			<p><strong>Select a Title Size:</strong></p>
+			<RangeControl
+				value={attributes.titleSize}
+				onChange={(val) => setAttributes({ titleSize: val })}
+				min={1}
+				max={5}
+				step={0.1}
+			/>
+			<p><strong>Select a Title Color:</strong></p>
+			<ColorPalette
+				colors={colors}
+				value={attributes.titleColor}
+				onChange={(color) => setAttributes({ titleColor: color })}
+			/>
+		</PanelBody>
+	)
+}
+
+function SetRatingSettings({ attributes, setAttributes, colors }) {
+	return (
+		<PanelBody title={'Rating Settings'}>
+			<p><strong>Select a Rating Color:</strong></p>
+			<ColorPalette
+				colors={colors}
+				value={attributes.ratingColor}
+				onChange={(color) => setAttributes({ ratingColor: color })}
+			/>
+		</PanelBody>
 	)
 }
 
 
-function MediaSelection({ attributes, setAttributes }) {
+//___BLOCKCOMPONENTS___//
+function MediaSelection({ attributes, setAttributes, colors }) {
+	// This is the placeholder you see before selecting a background image/color
 	return (
 		<Placeholder
 			label="Hero Image Block"
@@ -41,60 +74,83 @@ function MediaSelection({ attributes, setAttributes }) {
 						return <Button className="btn-media-select" onClick={open}>Media Library</Button>
 					}}
 				/>
-				<ColorSelection attributes={attributes} setAttributes={setAttributes} />
+				<ColorPalette
+					colors={colors}
+					value={attributes.color}
+					onChange={(color) => setAttributes({ bgColor: color })}
+				/>
 			</MediaUploadCheck>
 		</Placeholder>
 	)
 }
 
-
-
 function TitleInput({ attributes, setAttributes }) {
-	console.log(attributes)
 	return (
-		<TextControl
+		<RichText
 			className="title-input"
-			type="text"
+			tagName="h2"
 			value={attributes.title}
+			placeholder="Add a title..."
 			onChange={(val) => setAttributes({ title: val })}
+			// changing style dynamically
+			style={{ fontSize: attributes.titleSize + "em", color: attributes.titleColor }}
 		/>
+	)
+}
+
+function StarRating({ attributes }) {
+	// useState to preview the rating inside the block
+	const [ratingValue, setRatingValue] = useState(100)
+	return (
+		<div className='rating-container'>
+			<Rating
+				transition
+				onClick={(val) => setRatingValue(val)}
+				ratingValue={ratingValue}
+				initalValue={100}
+				fillColor={attributes.ratingColor}
+			/>
+		</div>
 	)
 }
 
 
 
+
+//___EDIT FUNCTION___//
 export default function Edit({ attributes, setAttributes }) {
-	if (!attributes.mediaUrl && !attributes.color) {
-		return <MediaSelection attributes={attributes} setAttributes={setAttributes} />
-	}
-	if (attributes.mediaUrl) {
-		return (
-			<div className="image-container">
-				<TitleInput attributes={attributes} setAttributes={setAttributes} />
-				<img src={attributes.mediaUrl} className="image-preview" />
+	// pre-selected colors for colorpalette
+	const colors = [
+		{ name: 'Verdigris', color: '#05A8AA' },
+		{ name: 'Turquoise Green', color: '#B8D5B8' },
+		{ name: 'Desert Sand', color: '#D7B49E' },
+		{ name: 'Flame', color: '#DC602E' },
+		{ name: 'International Orange', color: '#BC412B' },
+	];
+
+	// If there's no mediaUrl or bgColor saved yet, show MediaSelection placeholder
+	if (!attributes.mediaUrl && !attributes.bgColor) {
+		return <MediaSelection attributes={attributes} setAttributes={setAttributes} colors={colors} />
+	};
+
+	// If there's a mediaUrl or bgColor, show preview with panelsettings
+	if (attributes.mediaUrl || attributes.bgColor) {
+		return ([
+			<InspectorControls>
+				<SetBackgroundSettings attributes={attributes} setAttributes={setAttributes} />
+				<SetTitleSettings attributes={attributes} setAttributes={setAttributes} colors={colors} />
+				<SetRatingSettings attributes={attributes} setAttributes={setAttributes} colors={colors} />
+			</InspectorControls>,
+			<div className="block-container">
+				<div className="content-container">
+					<TitleInput attributes={attributes} setAttributes={setAttributes} />
+					<StarRating attributes={attributes} setAttributes={setAttributes} />
+				</div>
+				{/* If mediaUrl, show image */}
+				{attributes.mediaUrl && <img src={attributes.mediaUrl} className="image-preview" style={{ opacity: attributes.bgOpacity }} />}
+				{/* If bgColor, show color */}
+				{attributes.bgColor && <div className="color-container" style={{ backgroundColor: attributes.bgColor, opacity: attributes.bgOpacity }}></div>}
 			</div>
-		)
-	}
-	if (attributes.color) {
-		return (
-			<div className="color-container" style={{ backgroundColor: attributes.color }}>
-				<TitleInput attributes={attributes} setAttributes={setAttributes} />
-			</div>
-		)
-	}
-
-
-	// return (
-	// 	<div
-	// 		className="block-container">
-	// 		<Placeholder
-	// 			label="Hero Image Block"
-	// 			instructions="Add a title, an image or a color and give it a rating"
-	// 		>
-	// 			<TitleInput attributes={attributes} setAttributes={setAttributes} />
-	// 			{/* <ColorSelection attributes={attributes} setAttributes={setAttributes} /> */}
-
-	// 		</Placeholder>
-	// 	</div>
-	// );
+		]);
+	};
 }

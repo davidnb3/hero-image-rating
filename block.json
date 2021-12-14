@@ -4,7 +4,7 @@
 	"name": "create-block/hero-image-rating",
 	"version": "0.1.0",
 	"title": "Hero Image Rating",
-	"category": "widgets",
+	"category": "media",
 	"icon": "smiley",
 	"description": "Hero Image Block mit Bewertung",
 	"supports": {
@@ -17,14 +17,33 @@
 	"attributes": {
 		"title": {
 			"type": "string",
-			"default": "Add a title..."
+			"source": "html",
+			"selector": "h1"
+		},
+		"titleSize": {
+			"type": "number",
+			"default": "3"
+		},
+		"titleColor": {
+			"type": "string",
+			"default": "white"
 		},
 		"mediaUrl": {
 			"type": "string"
 		},
-		"color": {
+		"bgColor": {
 			"type": "string",
 			"default": ""
+		},
+		"bgOpacity": {
+			"type": "number",
+			"default": 10
+		},
+		"ratingColor": {
+			"type": "string"
+		},
+		"ratingValue": {
+			"type": "number"
 		}
 	}
 }

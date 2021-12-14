@@ -6,7 +6,34 @@
  */
 
 .block-container{
-	color: #fff;
-	padding: 2px;
-	height: 200px;
+	margin-left: 0;
+	margin-right: 0;
+	max-width: none;
+	height: 80vh;
+	width: 100%;
+	display: flex;
+    justify-content: center;
+	position: relative;
+    align-items: center;
+}
+
+
+.image-preview {
+	height: 80vh;
+	width: 100%;
+}
+
+.color-container {
+	height: 80vh;
+	width: 100%;
+	display: flex;
+    justify-content: center;
+	position: relative;
+    align-items: center;
+}
+
+.content-container {
+	position:absolute;
+	z-index: 100;
+	text-align: center;
 }
