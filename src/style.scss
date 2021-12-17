@@ -5,35 +5,29 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.block-container{
-	margin-left: 0;
-	margin-right: 0;
-	max-width: none;
-	height: 80vh;
-	width: 100%;
+.block-container {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	max-width: none !important;
 	display: flex;
-    justify-content: center;
+	justify-content: center;
 	position: relative;
-    align-items: center;
-}
-
-
-.image-preview {
-	height: 80vh;
-	width: 100%;
+	align-items: center;
 }
 
 .color-container {
-	height: 80vh;
-	width: 100%;
 	display: flex;
-    justify-content: center;
+	justify-content: center;
 	position: relative;
-    align-items: center;
+	align-items: center;
 }
 
 .content-container {
-	position:absolute;
+	position: absolute;
 	z-index: 100;
 	text-align: center;
+}
+
+input[type="radio"] {
+	display: none !important;
 }

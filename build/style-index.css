@@ -8,25 +8,16 @@
  * Replace them with your own styles or remove the file completely.
  */
 .block-container {
-  margin-left: 0;
-  margin-right: 0;
-  max-width: none;
-  height: 80vh;
-  width: 100%;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
   display: flex;
   justify-content: center;
   position: relative;
   align-items: center;
 }
 
-.image-preview {
-  height: 80vh;
-  width: 100%;
-}
-
 .color-container {
-  height: 80vh;
-  width: 100%;
   display: flex;
   justify-content: center;
   position: relative;
@@ -37,6 +28,10 @@
   position: absolute;
   z-index: 100;
   text-align: center;
+}
+
+input[type=radio] {
+  display: none !important;
 }
 
 /*# sourceMappingURL=style-index.css.map*/
