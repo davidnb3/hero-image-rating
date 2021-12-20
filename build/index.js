@@ -101,7 +101,7 @@ function SetRatingSettings(_ref3) {
     }),
     min: 1,
     max: 5,
-    step: 0.5
+    step: 0.1
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select a Rating Color:")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
     colors: colors,
     value: attributes.ratingColor,
@@ -171,11 +171,11 @@ function StarRating(_ref7) {
     attributes,
     setAttributes
   } = _ref7;
-  // Index als key prop nicht gut?
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [...Array(5)].map((star, index) => {
     const ratingValue = index + 1;
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-      key: ratingValue,
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+      key: ratingValue.toString()
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
       type: "radio",
       className: "star-input",
       name: "rating",
@@ -316,7 +316,7 @@ __webpack_require__.r(__webpack_exports__);
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('create-block/hero-image-rating', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("create-block/hero-image-rating", {
   /**
    * @see ./edit.js
    */

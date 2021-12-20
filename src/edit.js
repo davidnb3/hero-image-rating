@@ -89,7 +89,7 @@ function SetRatingSettings({ attributes, setAttributes, colors }) {
 				onChange={(val) => setAttributes({ ratingSize: val })}
 				min={1}
 				max={5}
-				step={0.5}
+				step={0.1}
 			/>
 			<p>
 				<strong>Select a Rating Color:</strong>
@@ -151,15 +151,13 @@ function TitleInput({ attributes, setAttributes }) {
 }
 
 function StarRating({ attributes, setAttributes }) {
-	// Index als key prop nicht gut?
 	return (
 		<>
 			{[...Array(5)].map((star, index) => {
 				const ratingValue = index + 1;
 				return (
-					<label>
+					<label key={ratingValue.toString()}>
 						<input
-							key={ratingValue}
 							type="radio"
 							className="star-input"
 							name="rating"

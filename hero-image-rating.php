@@ -26,3 +26,8 @@ function create_block_hero_image_rating_block_init() {
 add_action( 'init', 'create_block_hero_image_rating_block_init' );
 
 
+function wpdocs_theme_name_scripts() {
+	wp_enqueue_script( 'frontend-script', plugins_url( "build/rating.js", __FILE__ ) , array('wp-blocks', 'wp-block-editor'), '1.0.0', true );
+}
+
+add_action( 'wp_enqueue_scripts', 'wpdocs_theme_name_scripts' );

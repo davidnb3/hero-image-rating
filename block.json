@@ -12,6 +12,7 @@
 	},
 	"textdomain": "hero-image-rating",
 	"editorScript": "file:./build/index.js",
+	"viewScript": "file:./build/rating.js",
 	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css",
 	"attributes": {
@@ -49,7 +50,7 @@
 		},
 		"rating": {
 			"type": "number",
-			"default": 0
+			"default": 1
 		},
 		"ratingColor": {
 			"type": "string",
