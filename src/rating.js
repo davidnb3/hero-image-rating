@@ -1,7 +1,10 @@
-import data from "../block.json";
 
 // Kann nicht auf die Value ratingColor Attribute zugreifen die in block.json definiert ist
+import data from "../block.json";
 console.log(data.attributes.ratingColor);
+
+const attributes = wp.data.select( 'core/block-editor' ).getSelectedBlock().attributes;
+console.log(attributes)
 
 const allStars = document.querySelectorAll(".star");
 const ratingColor = allStars[0].style.color;

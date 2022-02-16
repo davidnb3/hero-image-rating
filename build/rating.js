@@ -62,8 +62,10 @@ __webpack_require__.r(__webpack_exports__);
  // Kann nicht auf die Value ratingColor Attribute zugreifen die in block.json definiert ist
 
 console.log(_block_json__WEBPACK_IMPORTED_MODULE_0__.attributes.ratingColor);
+const attributes = wp.data.select('core/block-editor').getSelectedBlock().attributes;
 const allStars = document.querySelectorAll(".star");
 const ratingColor = allStars[0].style.color;
+console.log(attributes);
 console.log(ratingColor);
 allStars.forEach((star, clickedIndex) => {
   star.addEventListener("click", () => {
